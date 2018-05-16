@@ -1,0 +1,28 @@
+{
+  "name": "sml.af",
+  "version": "0.1.0",
+  "description": "Small AF URL Shortener",
+  "main": "server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brycejech/sml.af.git"
+  },
+  "author": "Bryce Jech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brycejech/sml.af/issues"
+  },
+  "homepage": "https://github.com/brycejech/sml.af#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "jsonwebtoken": "^8.2.1",
+    "pg": "^7.4.3"
+  }
+}
