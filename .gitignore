@@ -1,3 +1,11 @@
+
+conf/*
+*.DS_Store
+
+# =================
+# NodeJS .gitignore
+# =================
+
 # Logs
 logs
 *.log
