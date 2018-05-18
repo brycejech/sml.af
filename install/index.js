@@ -1,33 +1,61 @@
 'use strict';
 
+const fs = require('fs');
+
 const db = require('../lib/db');
 
+const createLinkSequenceSQL = fs.readFileSync(__dirname + '/sql/create-link-sequence.sql', 'utf8'),
+      createLinkTableSQL    = fs.readFileSync(__dirname + '/sql/create-link-table.sql',    'utf8');
 
-/*
-    Create Link table
-*/
+const tasks = [
+    {
+        name: 'Create link_id Sequence',
+        query: createLinkSequenceSQL
+    },
+    {
+        name: 'Create link Table',
+        query: createLinkTableSQL
+    }
+];
 
-(async () => {
+const promises = [];;
 
-const createLinkTableSQL = `
+tasks.forEach( async (task) => {
+    promises.push(
+        new Promise( async (resolve, reject) => {
 
-    DROP TABLE IF EXISTS link CASCADE;
+            console.log(`Running "${task.name}"`);
 
-    CREATE TABLE link
-    (
-        id       SERIAL PRIMARY KEY,
-        link     TEXT UNIQUE NOT NULL,
-        url      TEXT NOT NULL,
-        created  TIMESTAMP DEFAULT now()::timestamp
-    );
-`;
+            try{
+                const result = await db.query(task.query);
+                console.log(`Completed "${task.name}"`);
+                resolve();
+            }
+            catch(e){
+                console.log(`Error with "${task.name}":`);
+                console.log(e);
+                reject(e);
+            }
+        })
+    )
+});
 
-try{
-    const result = await db.query(createLinkTableSQL);
-}
-catch(e){
-    console.log('Failed to create "link" table:');
-    console.log(e);
-}
+Promise.all(promises)
+    .then( async () => {
+        
+        await db.disconnect();
+        console.log('\nDB disconnected, draining pool');
 
-})();
+        console.log('\n----------------------');
+        console.log('Installation Complete!');
+        console.log('----------------------\n');
+
+        process.exit();
+    })
+    .catch( async (e) => {
+        console.log('\n------------------------------\n');
+        console.log('Errors with install! See above');
+        console.log('\n------------------------------\n')
+        await db.disconnect();
+        process.exit();
+    });
