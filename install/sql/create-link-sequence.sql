@@ -1,0 +1,6 @@
+
+DROP SEQUENCE IF EXISTS link_id CASCADE;
+
+CREATE SEQUENCE link_id
+    INCREMENT     1
+    START     10000;
