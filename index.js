@@ -13,12 +13,12 @@ const env = process.env;
 const server = express();
 
 server.set('case sensitive routing', true);
-server.use(cookieParser(), bodyParser.json());
+server.use(cookieParser(), bodyParser.json(), bodyParser.urlencoded({extended: true}));
 
 
 // Static routing
 // Move static routes to web server for better performance
-server.use(express.static(path.join(__dirname, 'static')));
+server.use(express.static(path.join(__dirname, 'client')));
 
 // HANDLEBARS SETUP
 let hbs = exphbs.create({
@@ -38,9 +38,12 @@ server.set('view engine', 'handlebars');
 const routes = require('./routes');
 
 server.get('/', getRequestInfo, routes.root);
+server.get('/links', routes.allLinks);
 server.get('/:link', routes.link);
 server.get('/:link/stats', routes.linkStats);
 server.get('/o/:org/:link', routes.orgLink);
+
+server.post('/api/link', routes.addLink);
 
 function getRequestInfo(req, res, next){
     console.log(req.headers);
