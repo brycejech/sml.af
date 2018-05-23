@@ -1,13 +1,40 @@
 'use strict';
 
+const core = require('../core/smlaf.js');
+
 function root(req, res, next){
+    // return res.send(req.headers);
     return res.render('home');
 }
 
-function link(req, res, next){
+async function link(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
-    return res.send({ link: req.params.link });
+    let hash = req.params.link;
+    hash = await core.links.getByHash(hash);
+
+    return res.send(hash);
+}
+
+async function allLinks(req, res, next){
+    const results = await core.links.getAll();
+
+    return res.send(results);
+}
+
+async function addLink(req, res, next){
+    const url = req.body.link;
+    console.log(req.body);
+    if(!url){
+        const message = 'Must provide link -> https://sml.af/api/link/:link';
+        return res.status(400).send({ message });
+    }
+
+    const link = url;
+
+    const added = await core.links.addOrGetExisting(link);
+
+    return res.send(added);
 }
 
 function linkStats(req, res, next){
@@ -29,5 +56,7 @@ module.exports = {
     root,
     link,
     linkStats,
+    allLinks,
+    addLink,
     orgLink
 }
