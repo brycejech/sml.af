@@ -4,8 +4,9 @@ const fs = require('fs');
 
 const db = require('../lib/db');
 
-const createLinkSequenceSQL = fs.readFileSync(__dirname + '/sql/create-link-sequence.sql', 'utf8'),
-      createLinkTableSQL    = fs.readFileSync(__dirname + '/sql/create-link-table.sql',    'utf8');
+const createLinkSequenceSQL    = fs.readFileSync(__dirname + '/sql/create-link-sequence.sql',     'utf8'),
+      createLinkTableSQL       = fs.readFileSync(__dirname + '/sql/create-link-table.sql',        'utf8'),
+      createRequestLogTableSQL = fs.readFileSync(__dirname + '/sql/create-request-log-table.sql', 'utf8');
 
 const tasks = [
     {
@@ -15,6 +16,10 @@ const tasks = [
     {
         name: 'Create link Table',
         query: createLinkTableSQL
+    },
+    {
+        name: 'Create request_log Table',
+        query: createRequestLogTableSQL
     }
 ];
 
@@ -42,7 +47,7 @@ tasks.forEach( async (task) => {
 
 Promise.all(promises)
     .then( async () => {
-        
+
         await db.disconnect();
         console.log('\nDB disconnected, draining pool');
 
