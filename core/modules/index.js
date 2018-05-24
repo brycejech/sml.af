@@ -1,7 +1,9 @@
 'use strict';
 
-const links = require('./links');
+const links = require('./links'),
+      logs  = require('./logs');
 
 module.exports = {
-    links
+    links,
+    logs
 }

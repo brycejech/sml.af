@@ -1,0 +1,41 @@
+
+<table>
+    <thead>
+        <tr>
+            <th>IP</th>
+            <th>Origin</th>
+            <th>Referrer</th>
+            <th>Browser</th>
+            <th>Browser Ver</th>
+            <th>OS</th>
+            <th>OS Ver</th>
+            <th>Device</th>
+            <th>Device Ver</th>
+            <th>User Agent</th>
+            <th>Host</th>
+            <th>Request URL</th>
+            <th>Short URL</th>
+            <th>Link ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each log}}
+            <tr>
+                <td>{{ ip }}</td>
+                <td>{{ origin }}</td>
+                <td>{{ referrer }}</td>
+                <td>{{ browser }}</td>
+                <td>{{ browser_version }}</td>
+                <td>{{ operating_system }}</td>
+                <td>{{ operating_system_version }}</td>
+                <td>{{ device }}</td>
+                <td>{{ device_version }}</td>
+                <td>{{ user_agent_string }}</td>
+                <td>{{ host }}</td>
+                <td>{{ req_url }}</td>
+                <td>{{ short_url }}</td>
+                <td>{{ link_id }}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

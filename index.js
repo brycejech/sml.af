@@ -4,9 +4,8 @@ const express      = require('express'),
       exphbs       = require('express-handlebars'),
       cookieParser = require('cookie-parser'),
       bodyParser   = require('body-parser'),
-      cookie       = require('cookie'),
-      path         = require('path'),
-      { Pool }     = require('pg');
+      // cookie       = require('cookie'),
+      path         = require('path');
 
 const logRedirect = require('./lib/log-redirect');
 
@@ -40,18 +39,13 @@ server.set('view engine', 'handlebars');
 */
 const routes = require('./routes');
 
-server.get('/', getRequestInfo, routes.root);
-server.get('/links', routes.allLinks);
+server.get('/', routes.root);
+server.get('/logs/', routes.getRequestLog);
+server.get('/links/', routes.allLinks);
 server.get('/:link', routes.link, logRedirect);
 server.get('/:link/stats', routes.linkStats);
-server.get('/o/:org/:link', routes.orgLink);
 
 server.post('/api/link', routes.addLink);
-
-function getRequestInfo(req, res, next){
-    console.log(req.headers);
-    return next();
-}
 
 
 // APP START
