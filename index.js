@@ -8,11 +8,14 @@ const express      = require('express'),
       path         = require('path'),
       { Pool }     = require('pg');
 
+const logRedirect = require('./lib/log-redirect');
+
 const env = process.env;
 
 const server = express();
 
 server.set('case sensitive routing', true);
+server.enable('trust proxy');
 server.use(cookieParser(), bodyParser.json(), bodyParser.urlencoded({extended: true}));
 
 
@@ -39,7 +42,7 @@ const routes = require('./routes');
 
 server.get('/', getRequestInfo, routes.root);
 server.get('/links', routes.allLinks);
-server.get('/:link', routes.link);
+server.get('/:link', routes.link, logRedirect);
 server.get('/:link/stats', routes.linkStats);
 server.get('/o/:org/:link', routes.orgLink);
 
