@@ -11,14 +11,18 @@ const queries = require('../../sql/queries');
 async function getByUrl(url){
     const result = await db.query(queries.getLinkByUrl, [url]);
 
-    return result.rows;
+    if(result.rows){
+        return result.rows[0];
+    }
 }
 
 
 async function getByHash(hash){
     const result = await db.query(queries.getLinkByHash, [hash]);
 
-    return result.rows;
+    if(result.rows){
+        return result.rows[0];
+    }
 }
 
 
