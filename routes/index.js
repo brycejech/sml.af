@@ -10,10 +10,14 @@ function root(req, res, next){
 async function link(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
-    let hash = req.params.link;
-    hash = await core.links.getByHash(hash);
+    const requestLink = req.params.link;
 
-    return res.send(hash);
+    const link = await core.links.getByHash(requestLink);
+
+    res.send(link || {});
+
+    res.locals.link = link || {};
+    return next();
 }
 
 async function allLinks(req, res, next){
@@ -24,7 +28,7 @@ async function allLinks(req, res, next){
 
 async function addLink(req, res, next){
     const url = req.body.link;
-    console.log(req.body);
+    
     if(!url){
         const message = 'Must provide link -> https://sml.af/api/link/:link';
         return res.status(400).send({ message });
