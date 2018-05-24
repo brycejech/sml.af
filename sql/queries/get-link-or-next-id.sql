@@ -3,6 +3,7 @@ SELECT
 	link.id,
     link.url,
     link.short_url,
+    link.permalink,
     link.created,
 
 	nextval.id AS next_id
@@ -13,6 +14,7 @@ FROM
 		id,
 		url,
 		short_url,
+        permalink,
 		created
 	FROM
 		link

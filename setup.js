@@ -17,8 +17,13 @@ const urls = [
     for(let i = 0, len = urls.length; i < len; i++){
         const url = urls[i];
 
-        const link = await core.links.addOrGetExisting(url);
-        console.log(link);
+        try{
+            const link = await core.links.addOrGetExisting(url);
+            console.log(link);
+        }
+        catch(e){
+            console.log(e);
+        }
     }
 
 })();

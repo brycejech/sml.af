@@ -2,10 +2,10 @@
 
 const fs = require('fs');
 
-const db        = require('../../lib/db'),
+const conf      = require('../../conf'),
+      db        = require('../../lib/db'),
+      queries   = require('../../sql/queries'),
       shortener = require('../../lib/shortener');
-
-const queries = require('../../sql/queries');
 
 
 async function getByUrl(url){
@@ -39,12 +39,12 @@ async function getLinkOrNextID(url){
 }
 
 
-async function addLink(id, url, short_url){
+async function addLink(id, url, short_url, permalink){
 
-    if(!(id && url && short_url)) return;
+    if(!(id && url && short_url && permalink)) return;
 
     try{
-        const result = await db.query(queries.addLink, [ id, url, short_url ]);
+        const result = await db.query(queries.addLink, [ id, url, short_url, permalink ]);
 
         if(result.rows){
             return result.rows[0];
@@ -64,10 +64,13 @@ async function addOrGetExisting(url){
     if(exists.url) return exists;
 
     const id        = exists.next_id,
-          short_url = shortener.encode(id);
+          short_url = shortener.encode(id),
+          permalink = `${conf.SERVER_NAME}/${short_url}`;
+
+    console.log(id, url, short_url, permalink);
 
     try{
-        return await addLink(id, url, short_url);
+        return await addLink(id, url, short_url, permalink);
     }
     catch(e){
         return e;
