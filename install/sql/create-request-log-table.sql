@@ -7,7 +7,7 @@ CREATE TABLE request_log
     id                        bigserial PRIMARY KEY,
     ip                        text,
     origin                    text,
-    referrer                  text,
+    referer                  text,
     browser                   text,
     browser_version           varchar(11), -- xxx.xxx.xxx
     operating_system          text,

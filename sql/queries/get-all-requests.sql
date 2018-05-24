@@ -2,7 +2,7 @@ SELECT
     -- requestor info
     ip,
     origin,
-    referrer,
+    referer,
     -- browser, os, and device
     browser,
     browser_version,
