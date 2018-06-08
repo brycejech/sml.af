@@ -1,10 +1,39 @@
 
-<div id="createLinkWrapper" class="container container-lg">
+<div id="createLinkWrapper" class="container container-lg card">
     <h1 class="u-cntr">Create a Small AF Link</h1>
     <div class="row">
-        <form action="/api/link/" method="POST">
-            <input type="text" name="link" placeholder="Paste your link here" value="">
-            <input id="submit" type="submit" value="Submit">
+        <form id="create-link-form" action="/api/link/" method="POST">
+            <div id="link-wrapper">
+                <input id="link-input" type="text" name="link" autocomplete="off" placeholder="Paste your link here" value="">
+                <i id="link-icon" class="fas fa-link"></i>
+            </div>
+            <button id="submit-btn" type="submit" role="submit">S U B M I T</button>
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    'use strict';
+
+    (function(){
+
+        const theForm   = document.getElementById('create-link-form'),
+              linkInput = document.getElementById('link-input');
+
+        theForm.addEventListener('submit', function(e){
+            e.preventDefault();
+
+            if(_validateLink(linkInput.value)){
+                alert('Link is valid, submitting');
+                theForm.submit();
+            }
+        })
+
+
+        function _validateLink(link){
+            // just ensure it looks a little like a link
+            return /^https?:\/\/.*\..*$/.test(link);
+        }
+
+    })();
+</script>
