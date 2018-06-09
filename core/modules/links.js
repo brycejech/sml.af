@@ -65,7 +65,7 @@ async function addOrGetExisting(url){
 
     const id        = exists.next_id,
           short_url = shortener.encode(id),
-          permalink = `${conf.SERVER_NAME}/${short_url}`;
+          permalink = `${conf.app.SERVER_NAME}/${short_url}`;
 
     console.log(id, url, short_url, permalink);
 
