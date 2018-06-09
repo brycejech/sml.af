@@ -36,9 +36,31 @@ async function addLink(req, res, next){
 
     const link = url;
 
-    const added = await core.links.addOrGetExisting(link);
+    try{
+        const isSafe = await core.url.isSafe(url);
 
-    return res.send(added);
+        if(isSafe.safe){
+            const added = await core.links.addOrGetExisting(link);
+
+            added.created = true;
+            added.message = 'Success';
+
+            return res.send(added);
+        }
+        else{
+            return res.send({
+                created: false,
+                message: 'Failed to create short URL. ' + isSafe.reason,
+                url:     isSafe.url
+            });
+        }
+    }
+    catch(e){
+        console.log(e);
+        res.status(500).send({ message: 'Server Error' });
+    }
+
+
 }
 
 async function getRequestLog(req, res, next){

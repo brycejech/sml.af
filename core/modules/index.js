@@ -1,9 +1,11 @@
 'use strict';
 
 const links = require('./links'),
-      logs  = require('./logs');
+      logs  = require('./logs'),
+      url   = require('./url');
 
 module.exports = {
     links,
-    logs
+    logs,
+    url
 }
