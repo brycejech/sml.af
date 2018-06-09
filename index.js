@@ -31,7 +31,20 @@ let hbs = exphbs.create({
 server.engine('handlebars', hbs.engine);
 server.set('view engine', 'handlebars');
 
+/*
+    ===========
+    TEST ROUTES
+    ===========
+*/
+server.get('/testRedirect', (req, res, next) => {
 
+    const time = Date.now();
+
+    while(Date.now() - time < 10000){
+        let a = 0;
+    }
+    return res.redirect('https://google.com');
+});
 /*
     =======
     ROUTING
