@@ -23,8 +23,16 @@
         theForm.addEventListener('submit', function(e){
             e.preventDefault();
 
-            if(_validateLink(linkInput.value)){
-                alert('Link is valid, submitting');
+            var isValid = _validateLink(linkInput.value);
+
+            // TODO
+            // - Pretty-fy message to user
+            // - Submit request via AJAX
+            if(!isValid.valid){
+                alert('Link is not valid. ' + isValid.message);
+            }
+            else{
+                alert('Link is valid, submitting.');
                 theForm.submit();
             }
         })
@@ -32,7 +40,25 @@
 
         function _validateLink(link){
             // just ensure it looks a little like a link
-            return /^https?:\/\/.*\..*$/.test(link);
+            link = link.trim();
+            if(!/^https?:\/\//.test(link)){
+                return {
+                    valid: false,
+                    message: 'URL must begin with https:// or http://'
+                }
+            }
+            else if(/^https?:\/\/.*\..*$/.test(link)){
+                return {
+                    valid: true,
+                    message: 'URL is valid.'
+                }
+            }
+            else{
+                return {
+                    valid: false,
+                    message: 'URL did not pass validation.'
+                }
+            }
         }
 
     })();
