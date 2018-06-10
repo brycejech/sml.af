@@ -26,6 +26,26 @@ async function link(req, res, next){
     return next();
 }
 
+async function peek(req, res, next){
+    if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
+
+    const requestLink = req.params.link;
+
+    const link = await core.links.getByHash(requestLink);
+
+    if(!link.url){
+        return res.send({ message: 'This is not a sml.af link' });
+    }
+    else{
+        return res.send({
+            short_url:  link.short_url,
+            permalink:  link.permalink,
+            created:    link.created,
+            redirectTo: link.url
+        });
+    }
+}
+
 async function allLinks(req, res, next){
     const results = await core.links.getAll();
 
@@ -99,6 +119,7 @@ async function linkStats(req, res, next){
 module.exports = {
     root,
     link,
+    peek,
     linkStats,
     allLinks,
     addLink,

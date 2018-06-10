@@ -57,6 +57,7 @@ server.get('/logs/', routes.getRequestLog);
 server.get('/links/', routes.allLinks);
 server.get('/:link', routes.link, logRedirect);
 server.get('/:link/stats', routes.linkStats);
+server.get('/:link/peek', routes.peek);
 
 server.post('/api/link', routes.addLink);
 
