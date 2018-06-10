@@ -1,7 +1,7 @@
 'use strict';
 /*
     TODO
-    - Clean up naming issues with the work link
+    - Clean up naming issues with the word link
 */
 
 const core = require('../core/smlaf');
