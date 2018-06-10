@@ -2,6 +2,8 @@
 
 const core = require('../core/smlaf');
 
+const validUrl = require('valid-url');
+
 function root(req, res, next){
     // return res.send(req.headers);
     return res.render('home');
@@ -27,6 +29,10 @@ async function allLinks(req, res, next){
 }
 
 async function addLink(req, res, next){
+
+    // TODO
+    // - validate url with valid-url
+
     const url = req.body.link;
 
     if(!url){
