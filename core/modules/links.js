@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const conf      = require('../../conf'),
       db        = require('../../lib/db'),
-      queries   = require('../../sql/queries'),
+      queries   = db.queries,
       shortener = require('../../lib/shortener');
 
 

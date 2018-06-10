@@ -17,7 +17,6 @@ async function isSafeURL(url){
     }
 
     const redirectOrTimeout = await hasRedirectOrTimeout(url);
-    console.log(redirectOrTimeout);
     if(redirectOrTimeout){
         return {
             safe:   false,
