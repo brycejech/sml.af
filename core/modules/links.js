@@ -67,8 +67,6 @@ async function addOrGetExisting(url){
           short_url = shortener.encode(id),
           permalink = `${conf.app.SERVER_NAME}/${short_url}`;
 
-    console.log(id, url, short_url, permalink);
-
     try{
         return await addLink(id, url, short_url, permalink);
     }
