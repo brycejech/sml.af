@@ -1,10 +1,8 @@
 'use strict';
 
-const conf = require('../../conf');
+const conf = require('../../../conf');
 
-const http    = require('http'),
-      { URL } = require('url'),
-      request = require('request');
+const request = require('request');
 
 const threatTypeMap = {
     MALWARE: 'Malware',
@@ -13,27 +11,11 @@ const threatTypeMap = {
     POTENTIALLY_HARMFUL_APPLICATION: 'Potentially Harmful Application'
 }
 
-
-function redirectInQueryString(url){
-    const exp = /\?|&redirect/i;
-    return exp.test(url);
-}
-
-
 /*
     Uses the Google Safe Browsing API to
     check the URL against known bad domains
 */
-async function isSafeURL(url){
-
-
-    if(redirectInQueryString(url)){
-        return {
-            safe:   false,
-            reason: 'URL is not safe, potential redirect in querystring.',
-            url:    url
-        }
-    }
+async function checkGoogleSafeBrowsing(url){
 
     const requestBody = {
         client: {
@@ -74,13 +56,11 @@ async function isSafeURL(url){
             if(err) return reject(err);
 
             if(body && body.matches){
-                var reason = 'Domain known for "'
-                             + threatTypeMap[body.matches[0].threatType] || 'Unknown'
-                             + '" by Google Safe Browsing';
+                const threatType = body.matches[0].threatType || 'Unknown';
                 return resolve({
                     safe:   false,
                     url:    url,
-                    reason: reason
+                    reason: `Domain known for "${threatType}" by Google Safe Browsing`
                 });
             }
 
@@ -90,9 +70,7 @@ async function isSafeURL(url){
             });
         });
     });
+
 }
 
-
-module.exports = {
-    isSafe: isSafeURL
-}
+module.exports = checkGoogleSafeBrowsing;
