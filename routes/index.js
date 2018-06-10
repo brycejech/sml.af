@@ -1,4 +1,8 @@
 'use strict';
+/*
+    TODO
+    - Clean up naming issues with the work link
+*/
 
 const core = require('../core/smlaf');
 
@@ -78,9 +82,17 @@ async function getRequestLog(req, res, next){
     return res.render('requestLog', { log: data, layout: 'bare' });
 }
 
-function linkStats(req, res, next){
+async function linkStats(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
+    try{
+        const data = await core.logs.url(req.params.link);
+        console.log(data);
+        return res.render('requestLog', { log: data, layout: 'bare' });
+    }
+    catch(e){
+        return res.status(500).send({ message: 'Server error' });
+    }
     return res.send({ message: `Getting stats for ${req.params.link}` });
 }
 

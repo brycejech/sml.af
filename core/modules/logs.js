@@ -18,6 +18,20 @@ async function getAll(){
     }
 }
 
+async function byUrl(url){
+    try{
+        const data = await db.query(queries.getLinkLog, [url]);
+
+        if(data.rows){
+            return data.rows;
+        }
+    }
+    catch(e){
+        return undefined;
+    }
+}
+
 module.exports = {
-    getAll
+    getAll: getAll,
+    url: byUrl
 };
