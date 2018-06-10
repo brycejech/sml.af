@@ -34,13 +34,18 @@ async function addLink(req, res, next){
         return res.status(400).send({ message });
     }
 
-    const link = url;
-
     try{
+        // TODO
+        // - update how existence is checked
+        // - hitting db way too many times for this route
+        // - currently checks if exists, then to addOrGetExisting which hits db twice
+        const exists = await core.links.getByUrl(url);
+        if(exists) res.send(exists);
+
         const isSafe = await core.url.isSafe(url);
 
         if(isSafe.safe){
-            const added = await core.links.addOrGetExisting(link);
+            const added = await core.links.addOrGetExisting(url);
 
             added.created = true;
             added.message = 'Success';
@@ -59,8 +64,6 @@ async function addLink(req, res, next){
         console.log(e);
         res.status(500).send({ message: 'Server Error' });
     }
-
-
 }
 
 async function getRequestLog(req, res, next){
