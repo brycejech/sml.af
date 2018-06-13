@@ -23,11 +23,6 @@ async function getByHash(hash){
 }
 
 
-async function linkExists(url){
-    const result = await db.query(queries.linkExists, [url]);
-}
-
-
 async function getLinkOrNextID(url){
     const { rows } = await db.query(queries.getLinkOrNextID, [url]);
 
@@ -80,7 +75,6 @@ async function getAll(){
 module.exports = {
     getByUrl,
     getByHash,
-    linkExists,
     getLinkOrNextID,
     addLink,
     addOrGetExisting,
