@@ -7,22 +7,19 @@ const conf      = require('../../conf'),
       queries   = db.queries,
       shortener = require('../../lib/shortener');
 
+const empty = Object.create(null);
 
 async function getByUrl(url){
-    const result = await db.query(queries.getLinkByUrl, [url]);
+    const { rows } = await db.query(queries.getLinkByUrl, [url]);
 
-    if(result.rows){
-        return result.rows[0];
-    }
+    return rows.length ? rows[0] : empty;
 }
 
 
 async function getByHash(hash){
-    const result = await db.query(queries.getLinkByHash, [hash]);
+    const { rows } = await db.query(queries.getLinkByHash, [hash]);
 
-    if(result.rows){
-        return result.rows[0];
-    }
+    return rows.length ? rows[0] : empty;
 }
 
 
@@ -32,10 +29,9 @@ async function linkExists(url){
 
 
 async function getLinkOrNextID(url){
-    const result = await db.query(queries.getLinkOrNextID, [url]);
-    if(result.rows){
-        return result.rows[0];
-    }
+    const { rows } = await db.query(queries.getLinkOrNextID, [url]);
+
+    return rows.length ? rows[0] : empty;
 }
 
 
