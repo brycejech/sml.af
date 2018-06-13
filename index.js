@@ -1,6 +1,7 @@
 'use strict';
 
 const express      = require('express'),
+      RateLimit    = require('express-rate-limit'),
       exphbs       = require('express-handlebars'),
       cookieParser = require('cookie-parser'),
       bodyParser   = require('body-parser'),
@@ -10,6 +11,13 @@ const express      = require('express'),
 const logRedirect = require('./lib/log-redirect');
 
 const env = process.env;
+
+const limiter = new RateLimit({
+    windowMS: 1 * 60 * 1000, // 1 minute
+    max: 10,
+    delayMs: 0,
+    handler: (req, res) => res.status(429).send({ message: 'Rate limit exceeded, try again later :(' })
+})
 
 const server = express();
 
@@ -55,11 +63,11 @@ const routes = require('./routes');
 server.get('/', routes.root);
 server.get('/logs/', routes.getRequestLog);
 server.get('/links/', routes.allLinks);
-server.get('/:link', routes.link, logRedirect);
+server.get('/:link', limiter, routes.link, logRedirect);
 server.get('/:link/stats', routes.linkStats);
 server.get('/:link/peek', routes.peek);
 
-server.post('/api/link', routes.addLink);
+server.post('/api/link', limiter, routes.addLink);
 
 
 // APP START
