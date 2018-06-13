@@ -29,20 +29,23 @@ async function link(req, res, next){
 async function peek(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
-    const requestLink = req.params.link;
+    try{
+        const link = await core.links.getByHash(req.params.link);
 
-    const link = await core.links.getByHash(requestLink);
-
-    if(!link.url){
-        return res.send({ message: 'This is not a sml.af link' });
+        if(!link.url){
+            return res.send({ message: 'This is not a sml.af link' });
+        }
+        else{
+            return res.send({
+                short_url:  link.short_url,
+                permalink:  link.permalink,
+                created:    link.created,
+                redirectTo: link.url
+            });
+        }
     }
-    else{
-        return res.send({
-            short_url:  link.short_url,
-            permalink:  link.permalink,
-            created:    link.created,
-            redirectTo: link.url
-        });
+    catch(e){
+        return res.status(500).send({ message: 'Server error' });
     }
 }
 
@@ -70,7 +73,7 @@ async function addLink(req, res, next){
         // - hitting db way too many times for this route
         // - currently checks if exists, then to addOrGetExisting which hits db twice
         const exists = await core.links.getByUrl(url);
-        if(exists) res.send(exists);
+        if(exists.url) return res.send(exists);
 
         const isSafe = await core.url.isSafe(url);
 
