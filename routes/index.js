@@ -3,8 +3,9 @@
     TODO
     - Clean up naming issues with the word link
 */
-
-const core = require('../core/smlaf');
+const cookie = require('cookie'),
+      core   = require('../core/smlaf'),
+      conf   = require('../conf');
 
 const validUrl = require('valid-url');
 
@@ -16,13 +17,28 @@ function root(req, res, next){
 async function link(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
-    const requestLink = req.params.link;
+    let peek = req.cookies.hasOwnProperty('peek')
+        ? parseInt(req.cookies.peek)
+        : true;
 
-    const link = await core.links.getByHash(requestLink);
+    if(peek){
+        const peekCookie = cookie.serialize('peek', 1, {
+            httpOnly: true,
+            expires: new Date('12/31/9999')
+        });
+        res.header('Set-Cookie', peekCookie);
+        return res.redirect([
+            // conf.app.SERVER_NAME,
+            'http://localhost:8080',
+            req.params.link,
+            'peek'
+        ].join('/'));
+    }
 
-    res.send(link || {});
+    const link = res.locals.link = await core.links.getByHash(req.params.link) || {}
 
-    res.locals.link = link || {};
+    res.send(link);
+
     return next();
 }
 

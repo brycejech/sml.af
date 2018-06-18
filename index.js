@@ -5,7 +5,7 @@ const express      = require('express'),
       exphbs       = require('express-handlebars'),
       cookieParser = require('cookie-parser'),
       bodyParser   = require('body-parser'),
-      // cookie       = require('cookie'),
+      cookie       = require('cookie'),
       path         = require('path');
 
 const logRedirect = require('./lib/log-redirect');
