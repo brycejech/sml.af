@@ -1,18 +1,77 @@
 
-<div id="particles"></div>
-
-<div id="createLinkWrapper" class="container container-lg card">
-    <h1 class="u-cntr">Create a Small AF Link</h1>
-    <div class="row">
-        <form id="create-link-form" action="/api/link/" method="POST">
-            <div id="link-wrapper">
-                <input id="link-input" type="text" name="link" autocomplete="off" placeholder="Paste your link here" value="">
-                <i id="link-icon" class="fas fa-link"></i>
-            </div>
-            <button id="submit-btn" type="submit" role="submit">S U B M I T</button>
-        </form>
+<section id="createLinkSection">
+    <div id="createLinkWrapper" class="container container-lg card">
+        <h1 class="u-cntr">Create a Small AF Link</h1>
+        <div class="row">
+            <form id="create-link-form" action="/api/link/" method="POST">
+                <div id="link-wrapper">
+                    <input id="link-input" type="text" name="link" autocomplete="off" placeholder="Paste your link here" value="">
+                    <i id="link-icon" class="fas fa-link"></i>
+                </div>
+                <button id="submit-btn" type="submit" role="submit">S H O R T E N</button>
+            </form>
+        </div>
     </div>
-</div>
+    <div id="particles"></div>
+</section>
+
+<section id="features">
+    <div class="container container-xxl">
+        <h1 class="u-cntr section-heading">Features</h1>
+        <div class="row">
+            <div class="col-4">
+                <div class="about-card">
+                    <h2 class="u-cntr"><small style="margin-right:8px"><i class="fas fa-lock"></i></small> Safety Features</h2>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Peek enabled by default</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span><a class="white-link" href="https://safebrowsing.google.com/">Google Safe Browsing</a> integration</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Links cannot themselves be redirects</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="about-card">
+                    <h2 class="u-cntr"><small style="margin-right:8px"><i class="far fa-eye"></i></small> Peek</h2>
+                    <p>With peek enabled, all sml.af links are first directed to a page that will allow users to view the link before deciding if they want to visit it</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="about-card">
+                    <h2 class="u-cntr"><small style="margin-right:8px"><i class="fas fa-chart-line"></i></small>Insights</h2>
+                    <p>Link insights should be open for everyone. View statistics for any link by appending "/stats" to the end of the url</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- CARD HEIGHT NORMALIZATION --}}
+    <script type="text/javascript" src="/js/same-height.js"></script>
+    <script type="text/javascript">
+        'use strict';
+        sameHeight('.about-card');
+    </script>
+</section>
+
+<section id="safety">
+    <div class="container container-lg">
+        <h1 class="u-cntr section-heading" style="margin-bottom:40px">Safety Features</h1>
+        <h3 class="u-cntr">Link Safety Checks</h3>
+        <p>
+            User safety is a top priority for this service. All urls are tested in a variety of ways before being shortened. We use <a class="white-link" href="https://safebrowsing.google.com/">Google Safe Browsing</a> to verify that domains are not known for spam, malware, or social engineering. We also ensure that links do not redirect to somewhere else, which could be used to bypass security checks.
+        </p>
+        <hr>
+        <h3 class="u-cntr">About Peek</h3>
+        <p>
+            Peek is a safety feature, enabled by default, that directs users to a page where the redirect can be inspected before making a decision to visit. With peek, you are free from worry that a link may be malicious. View the peek page for any link by appending "/peek" to the end of the url. Peek can be disabled at any time from the peek page.
+        </p>
+    </div>
+</section>
+
+<footer id="footer">
+    <div class="u-cntr">
+        <h3><i class="fas fa-code"></i> with <i class="far fa-heart"></i> by <a class="white-link" href="https://github.com/BryceJech">Bryce Jech</a></h3>
+    </div>
+</footer>
+
 
 <script type="text/javascript">
     'use strict';
@@ -34,7 +93,6 @@
                 alert('Link is not valid. ' + isValid.message);
             }
             else{
-                alert('Link is valid, submitting.');
                 theForm.submit();
             }
         })
