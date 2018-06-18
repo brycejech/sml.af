@@ -1,0 +1,46 @@
+
+#nav
+    width: 100%
+    color: $white
+    font-family: 'Source Sans Pro', sans-serif
+    font-weight: 300
+
+    padding: 0 25px
+
+    z-index: 1000
+
+    background-color: $pink
+
+    &::after
+        content: ''
+        display: block
+        clear: both
+
+    .nav-left
+        padding: 15px 0
+        display: inline-block
+        i
+            font-size: 2.8rem
+        h1
+            display: inline-block
+            margin: 0 0 0 15px
+    .nav-right
+        float: right
+
+        list-style-type: none
+        height: 100%
+        margin: 0
+        padding: 0
+
+        li
+            float: left
+            &:hover
+                background-color: darken($pink, 15%)
+
+            a
+                color: $white
+                font-size: 2.4rem
+                text-decoration: none
+                height: 100%
+                display: block
+                padding: 25px 20px
