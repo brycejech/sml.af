@@ -16,8 +16,14 @@ function root(req, res, next){
 async function link(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
-    if(res.locals.peekEnabled){
-        res.header('Set-Cookie', getPeekCookie(true));
+
+    // if peek cookie present, use it, otherwise set to true
+    const peekEnabled = Object.hasOwnProperty.call(req.cookies, 'peek')
+            ? parseInt(req.cookies.peek)
+            : true;
+
+    if(peekEnabled){
+        res.header('Set-Cookie', getPeekCookie(peekEnabled));
         return res.redirect([
             conf.app.SERVER_NAME,
             req.params.link,
