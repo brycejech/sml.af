@@ -19,8 +19,7 @@ async function link(req, res, next){
     if(res.locals.peekEnabled){
         res.header('Set-Cookie', getPeekCookie(true));
         return res.redirect([
-            // conf.app.SERVER_NAME,
-            'http://localhost:8080',
+            conf.app.SERVER_NAME,
             req.params.link,
             'peek'
         ].join('/'));
@@ -115,7 +114,6 @@ async function linkStats(req, res, next){
 
     try{
         const data = await core.logs.url(req.params.link);
-        console.log(data);
         return res.render('requestLog', { log: data, layout: 'bare' });
     }
     catch(e){
