@@ -1,0 +1,28 @@
+
+<style media="screen">
+</style>
+<section>
+    {{#if link.url}}
+        <div class="container container-lg card-gray">
+            <div class="row">
+                <h3 class="u-cntr">This link redirects to:</h3>
+                <h5 class="u-cntr" style="word-wrap:break-word">{{ link.url }}</h5>
+                <a class="btn btn-primary" href="{{ link.url }}">Visit Page</a>
+            </div>
+        </div>
+    {{else}}
+        <h1 class="u-cntr">Sorry, this is not a valid sml.af url <i class="far fa-frown"></i></h1>
+    {{/if}}
+
+    <hr>
+
+    <div class="container container-md card-gray" style="color:#EFEFEF">
+        {{#if peekEnabled}}
+            <h1 class="u-cntr">Peek is currently enabled</h1>
+            <a class="btn" href="/{{link.short_url}}/peek?setPeek=0">Disable</a>
+        {{else}}
+            <h1 class="u-cntr">Peek is currently disabled</h1>
+            <a class="btn" href="/{{link.short_url}}/peek?setPeek=1">Enable</a>
+        {{/if}}
+    </div>
+</section>

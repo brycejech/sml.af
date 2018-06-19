@@ -11,15 +11,25 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     </head>
     <body>
-        <nav id="nav">
-            <div class="nav-left">
-                <i class="fas fa-link"></i><h1>sml.af</h1>
+        <div id="page-wrapper">
+            <nav id="nav">
+                <div class="nav-left">
+                    <h1><a href="/"><i class="fas fa-link"></i> sml.af</a></h1>
+                </div>
+                <ul class="nav-right">
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#safety">Safety</a></li>
+                </ul>
+            </nav>
+
+            {{{body}}}
+
+        </div>
+
+        <footer id="footer">
+            <div class="u-cntr">
+                <h3><i class="fas fa-code"></i> with <i class="far fa-heart"></i> by <a class="white-link" href="https://github.com/BryceJech" target="_blank" rel="external noopen nofollow">Bryce Jech</a></h3>
             </div>
-            <ul class="nav-right">
-                <li><a href="/#features">Features</a></li>
-                <li><a href="/#safety">Safety</a></li>
-            </ul>
-        </nav>
-        {{{body}}}
+        </footer>
     </body>
 </html>

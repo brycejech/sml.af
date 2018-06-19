@@ -10,23 +10,14 @@ const cookie = require('cookie'),
 const validUrl = require('valid-url');
 
 function root(req, res, next){
-    // return res.send(req.headers);
     return res.render('home');
 }
 
 async function link(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
-    let peek = req.cookies.hasOwnProperty('peek')
-        ? parseInt(req.cookies.peek)
-        : true;
-
-    if(peek){
-        const peekCookie = cookie.serialize('peek', 1, {
-            httpOnly: true,
-            expires: new Date('12/31/9999')
-        });
-        res.header('Set-Cookie', peekCookie);
+    if(res.locals.peekEnabled){
+        res.header('Set-Cookie', getPeekCookie(true));
         return res.redirect([
             // conf.app.SERVER_NAME,
             'http://localhost:8080',
@@ -45,20 +36,18 @@ async function link(req, res, next){
 async function peek(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
+    let peekEnabled = res.locals.peekEnabled;
+
+    // if user wants to set peek val, override and set cookie
+    if(req.query.hasOwnProperty('setPeek')){
+        peekEnabled = parseInt(req.query.setPeek) ? true : false;
+        res.header('Set-Cookie', getPeekCookie(peekEnabled));
+    }
+
     try{
         const link = await core.links.getByHash(req.params.link);
 
-        if(!link.url){
-            return res.send({ message: 'This is not a sml.af link' });
-        }
-        else{
-            return res.send({
-                short_url:  link.short_url,
-                permalink:  link.permalink,
-                created:    link.created,
-                redirectTo: link.url
-            });
-        }
+        return res.render('peek', { link, peekEnabled });
     }
     catch(e){
         return res.status(500).send({ message: 'Server error' });
@@ -133,6 +122,14 @@ async function linkStats(req, res, next){
         return res.status(500).send({ message: 'Server error' });
     }
     return res.send({ message: `Getting stats for ${req.params.link}` });
+}
+
+function getPeekCookie(on){
+    return cookie.serialize('peek', on ? 1 : 0, {
+        path: '/',
+        httpOnly: true,
+        expires: new Date('12/31/9999')
+    });
 }
 
 module.exports = {

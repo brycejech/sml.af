@@ -39,20 +39,7 @@ let hbs = exphbs.create({
 server.engine('handlebars', hbs.engine);
 server.set('view engine', 'handlebars');
 
-/*
-    ===========
-    TEST ROUTES
-    ===========
-*/
-server.get('/testRedirect', (req, res, next) => {
 
-    const time = Date.now();
-
-    while(Date.now() - time < 10000){
-        let a = 0;
-    }
-    return res.redirect('https://google.com');
-});
 /*
     =======
     ROUTING
@@ -63,11 +50,18 @@ const routes = require('./routes');
 server.get('/', routes.root);
 server.get('/logs/', routes.getRequestLog);
 server.get('/links/', routes.allLinks);
-server.get('/:link', limiter, routes.link, logRedirect);
+server.get('/:link', limiter, isPeekEnabled, routes.link, logRedirect);
 server.get('/:link/stats', routes.linkStats);
-server.get('/:link/peek', routes.peek);
+server.get('/:link/peek', isPeekEnabled, routes.peek);
 
 server.post('/api/link', limiter, routes.addLink);
+
+function isPeekEnabled(req, res, next){
+    const cookies = req.cookies,
+          enabled = Object.hasOwnProperty.call(cookies, 'peek') && Boolean(parseInt(req.cookies.peek));
+    res.locals.peekEnabled = enabled;
+    return next();
+}
 
 
 // APP START
