@@ -1,5 +1,5 @@
 
-pm2.config.js
+process.config.js
 conf/*
 *.DS_Store
 
