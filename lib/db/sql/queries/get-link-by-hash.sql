@@ -1,9 +1,9 @@
 SELECT
     id,
     url,
-    short_url,
-    permalink,
-    created
+    hash,
+    created,
+    created_timestamp
 
 FROM link
 
