@@ -2,6 +2,7 @@
 process.config.js
 conf/*
 *.DS_Store
+env.js
 
 # =================
 # NodeJS .gitignore
