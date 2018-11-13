@@ -7,7 +7,7 @@ CREATE TABLE request_log
     id                        bigserial PRIMARY KEY,
     ip                        text,
     origin                    text,
-    referer                  text,
+    referer                   text,
     browser                   text,
     browser_version           varchar(11), -- xxx.xxx.xxx
     operating_system          text,
@@ -19,5 +19,6 @@ CREATE TABLE request_log
     req_url                   text,
     short_url                 varchar(50),
     link_id                   bigint,
-    request_time              TIMESTAMP  DEFAULT now()::timestamp
+    request_time              timestamptz DEFAULT (now() at time zone 'utc'),
+    request_timestamp         bigint      DEFAULT extract(epoch from now() at time zone 'utc' at time zone 'utc')
 );
