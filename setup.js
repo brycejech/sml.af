@@ -1,5 +1,7 @@
 'use strict';
 
+require('./env');
+
 const core = require('./core/smlaf');
 
 const urls = [
@@ -14,16 +16,24 @@ const urls = [
 
 ( async () => {
 
+    const promises = [];
+
     for(let i = 0, len = urls.length; i < len; i++){
         const url = urls[i];
 
         try{
-            const link = await core.links.addOrGetExisting(url);
-            console.log(link);
+            promises.push(core.links.addOrGetExisting(url));
         }
         catch(e){
+            console.log('Error:');
             console.log(e);
+            console.log('----------');
         }
     }
+
+    Promise.all(promises).then(links => {
+        links.forEach(link => console.log(link));
+    })
+    .then(() => process.exit());
 
 })();

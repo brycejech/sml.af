@@ -1,4 +1,5 @@
 'use strict';
+require('../env');
 
 const fs = require('fs');
 
