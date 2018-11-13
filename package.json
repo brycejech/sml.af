@@ -20,12 +20,12 @@
     "body-parser": "^1.18.3",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
-    "express-rate-limit": "^2.11.0",
-    "jsonwebtoken": "^8.2.1",
-    "pg": "^7.4.3",
-    "request": "^2.87.0",
+    "express-rate-limit": "^3.3.2",
+    "jsonwebtoken": "^8.3.0",
+    "pg": "^7.6.1",
+    "request": "^2.88.0",
     "useragent": "^2.3.0",
     "valid-url": "^1.0.9"
   }
