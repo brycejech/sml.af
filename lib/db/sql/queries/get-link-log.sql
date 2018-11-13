@@ -3,5 +3,5 @@ SELECT
 FROM
     request_log
 WHERE
-    short_url=$1
+    hash=$1
 ;

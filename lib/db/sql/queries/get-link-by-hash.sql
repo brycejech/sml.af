@@ -7,4 +7,4 @@ SELECT
 
 FROM link
 
-WHERE short_url=$1;
+WHERE hash=$1;
