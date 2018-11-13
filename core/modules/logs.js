@@ -18,9 +18,9 @@ async function getAll(){
     }
 }
 
-async function byUrl(url){
+async function byHash(hash){
     try{
-        const data = await db.query(queries.getLinkLog, [url]);
+        const data = await db.query(queries.getLinkLog, [hash]);
 
         if(data.rows){
             return data.rows;
@@ -33,5 +33,5 @@ async function byUrl(url){
 
 module.exports = {
     getAll: getAll,
-    url: byUrl
+    url: byHash
 };

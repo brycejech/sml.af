@@ -3,7 +3,7 @@ INSERT INTO request_log
         -- requestor info
         ip,
         origin,
-        referer,
+        referrer,
         -- browser, os, and device
         browser,
         browser_version,
@@ -18,10 +18,12 @@ INSERT INTO request_log
         req_url,
 
         -- link info
-        short_url,
+        hash,
         link_id
     )
 
 VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+
+RETURNING *
 ;
