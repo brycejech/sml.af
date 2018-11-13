@@ -1,40 +1,51 @@
 
+
+<div class="container container-xl mt-5">
+    <h1 class="text-center">Viewing data for <span class="text-ul">{{ link.permalink}}</span></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Permalink</th>
+                <th>Hash</th>
+                <th>Redirect URL</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="{{ link.permalink }}" target="_blank" rel="external noopener">{{ link.permalink }}</a></td>
+                <td>{{ link.short_url }}</td>
+                <td><a href="{{ link.url }}" target="_blank" rel="external noopener">{{ link.url }}</a></td>
+                <td>{{ link.created }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <table>
     <thead>
         <tr>
-            <th>IP</th>
             <th>Origin</th>
             <th>Referer</th>
             <th>Browser</th>
-            <th>Browser Ver</th>
             <th>OS</th>
-            <th>OS Ver</th>
             <th>Device</th>
-            <th>Device Ver</th>
             <th>User Agent</th>
             <th>Host</th>
-            <th>Request URL</th>
-            <th>Short URL</th>
-            <th>Link ID</th>
+            <th>Date</th>
         </tr>
     </thead>
     <tbody>
         {{#each log}}
             <tr>
-                <td>{{ ip }}</td>
                 <td>{{ origin }}</td>
                 <td>{{ referer }}</td>
-                <td>{{ browser }}</td>
-                <td>{{ browser_version }}</td>
+                <td>{{ browser }} {{ browser_version }}</td>
                 <td>{{ operating_system }}</td>
-                <td>{{ operating_system_version }}</td>
                 <td>{{ device }}</td>
-                <td>{{ device_version }}</td>
-                <td>{{ user_agent_string }}</td>
+                <td style="max-width: 250px">{{ user_agent_string }}</td>
                 <td>{{ host }}</td>
-                <td>{{ req_url }}</td>
-                <td>{{ short_url }}</td>
-                <td>{{ link_id }}</td>
+                <td>{{ request_time }}</td>
             </tr>
         {{/each}}
     </tbody>
