@@ -60,9 +60,15 @@ async function peek(req, res, next){
 }
 
 async function allLinks(req, res, next){
-    const results = await core.links.getAll();
+    try{
+        const results = await core.links.getAll();
 
-    return res.send(results);
+        return res.send(results);
+    }
+    catch(e){
+        return res.status(500).send({ message: e});
+    }
+
 }
 
 async function addLink(req, res, next){
@@ -90,7 +96,7 @@ async function addLink(req, res, next){
         if(isSafe.safe){
             const added = await core.links.addOrGetExisting(url);
 
-            added.created = true;
+            added.new = true;
             added.message = 'Success';
 
             return res.send(added);
@@ -118,9 +124,19 @@ async function getRequestLog(req, res, next){
 async function linkStats(req, res, next){
     if(!req.params.link) return res.status(404).send({ message: 'Not Found' });
 
+    let linkData;
+
     try{
-        const data = await core.logs.url(req.params.link);
-        return res.render('requestLog', { log: data, layout: 'bare' });
+        linkData = await core.links.getByHash(req.params.link);
+    }
+    catch(e){
+        return res.status(404).send({ message: 'Link not found' });
+    }
+
+    try{
+        const logData = await core.logs.url(req.params.link);
+
+        return res.render('requestLog', { log: logData, link: linkData, layout: 'bare' });
     }
     catch(e){
         return res.status(500).send({ message: 'Server error' });
