@@ -4,7 +4,9 @@
   "description": "Small AF URL Shortener",
   "main": "server",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,8 @@
     "pg": "^7.6.1",
     "request": "^2.88.0",
     "useragent": "^2.3.0",
-    "valid-url": "^1.0.9"
-  }
+    "valid-url": "^1.0.9",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
