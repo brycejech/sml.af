@@ -30,7 +30,7 @@
     "request": "^2.88.0",
     "useragent": "^2.3.0",
     "valid-url": "^1.0.9",
-    "snyk": "^1.189.0"
+    "snyk": "^1.242.0"
   },
   "snyk": true
 }
