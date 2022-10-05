@@ -5,7 +5,7 @@
   "main": "server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "repository": {
@@ -30,7 +30,7 @@
     "request": "^2.88.0",
     "useragent": "^2.3.0",
     "valid-url": "^1.0.9",
-    "snyk": "^1.242.0"
+    "@snyk/protect": "latest"
   },
   "snyk": true
 }
