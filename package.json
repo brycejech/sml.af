@@ -27,7 +27,7 @@
     "express-rate-limit": "^3.3.2",
     "jsonwebtoken": "^8.3.0",
     "pg": "^7.6.1",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "useragent": "^2.3.0",
     "valid-url": "^1.0.9",
     "snyk": "^1.242.0"
