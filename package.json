@@ -20,9 +20,9 @@
   "homepage": "https://github.com/brycejech/sml.af#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "cookie": "^0.3.1",
-    "cookie-parser": "^1.4.3",
-    "express": "^4.16.4",
+    "cookie": "^0.7.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
     "express-handlebars": "^3.0.0",
     "express-rate-limit": "^3.3.2",
     "jsonwebtoken": "^8.3.0",
